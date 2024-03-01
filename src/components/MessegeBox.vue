@@ -40,15 +40,7 @@
           : 'Jot something down'
       " v-model="newMessage"> </textarea>
    
-    <!-- <div id="msgBoxWrapper">
-      <textarea
-        id="msgBox"
-        class="p-1"
-        placeholder="Type your message..."
-        v-model="messageContent"
-        :rows="calculateRows(messageContent)"
-      ></textarea>
-    </div> -->
+  
 
     <!--file inserter-->
     <div class="inserter p-1 bg-white d-flex  align-items-center justify-content-between">
