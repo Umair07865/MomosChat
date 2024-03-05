@@ -1,5 +1,5 @@
 <template>
-  <div class="messegeBox container p-2 border rounded bg-white" v-show="defaultControler" >
+  <div class="messegeBox container col-12 p-2 border rounded bg-white"  >
     <!---message header-->
     <div class="chatHeader topHeader d-flex p-1 align-items-center">
       <button
@@ -34,6 +34,7 @@
       ref="msgBoxTextingControl"
     
       class=" border"
+      @keyup.enter="sendMessage"
       :placeholder="
         chatListDetails && chatListDetails.name
           ? 'Message ' + chatListDetails.name
@@ -79,12 +80,19 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 import { ref } from 'vue';
+// import { onSnapshot, collection } from "firebase/firestore";
+// Example import for Firebase in Vue.js
+// import { ref, get , database } from 'firebase/database';
+
+// import { db } from "@/firebase";
+
 // import {firestore } from "@/firebase";
 
 
 // import { auth } from "../firebase"
 import { myMixin } from "../mixins";
 export default {
+  
   name: "MessegeBox",
   mixins:[myMixin],
   data() {
@@ -102,13 +110,40 @@ export default {
       const selectedFile = event.target.files[0];
       console.log("Selected File:", selectedFile);
     },
-      sendMessege()
-    {
- 
-      this.$store.dispatch("newChats",this.newMessage);
-      
-   
+       sendMessage() {
+      const messageData = {
+        text: this.newMessage,
+        sender: 'client1', // Assuming sender is 'client1', adjust accordingly
+        timestamp: new Date().toISOString(),
+      };
+
+      // Dispatch the action to send the message to Firebase
+      this.$store.dispatch('sendMessageToFirebase', messageData);
+
+      // Clear the input field after sending the message
+      this.newMessage = '';
     },
+   
+   
+
+// Inside your component or Vuex action
+// async postNewChatMessage(message) {
+//   const chatsRef = collection(db, 'Chats');
+
+//   try {
+//     // Use addDoc to add a new document to the 'Chats' collection
+//     await addDoc(chatsRef, {
+//       message: message,
+//       timestamp: new Date(), // Add a timestamp or any other data you need
+//       // Add other fields as needed
+//     });
+
+//     console.log('Chat message posted successfully!');
+//   } catch (error) {
+//     console.error('Error posting chat message:', error);
+//   }
+// }
+
   //    scrollByPercentage(nvalue) {
   //     // Calculate the amount to scroll based on the viewport height
   //     const vh = window.innerHeight;
@@ -152,10 +187,18 @@ export default {
     return {}; // Return a default value or handle the error appropriately
   }
 },
-
+  messages() {
+      return this.$store.state.messages;
+    },
+    participants() {
+      return this.$store.state.participants;
+    },
 
     
   },
+  //  created() {
+  //   this.fetchFirebaseDatabase();
+  // },
 
  watch: {
   'chatListDetails.name': {
@@ -207,8 +250,8 @@ export default {
   width: 80%;
  
   bottom: 1rem; */
-      position: fixed;
-    width: 65%;
+      position: sticky;
+    /* width: 65%; */
     bottom: 1rem;
     right: 1rem;
 }

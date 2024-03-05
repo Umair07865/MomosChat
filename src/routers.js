@@ -9,11 +9,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/dashboard',
     component: HomePage
   },
   {
-    path: '/SignupPage',
+    path: '/',
     component: SignupPage
   }
 ];

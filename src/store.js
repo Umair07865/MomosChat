@@ -2,13 +2,20 @@ import Vue from "vue";
 
 import Vuex from "vuex";
 
+import { onSnapshot, collection } from "firebase/firestore";
+// Example import for Firebase in Vue.js
+// import { ref, get , database } from 'firebase/database';
+
+import { db } from "@/firebase";
+
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     todos: [],
     profiles: [],
     chats: [],
-    firebaseData: [],
+    firebaseData:[],
+    userLoggedIn:[]
   },
   mutations: {
     //step 4 here we are do changes with the store
@@ -22,17 +29,25 @@ export default new Vuex.Store({
       state.todos.products.push(newItem);
       // state.todos=[...state.todos, ...newItem]
     },
-    SET_CHAT_DETAILS(state, chatDetails) {
-      // alert("alert from store  : " +chatDetails)
-      state.profiles = chatDetails;
+    setUsers(state , user)
+    {
+      state.userLoggedIn=user;
+    },
+    // SET_CHAT_DETAILS(state, chatDetails) {
+    //   // alert("alert from store  : " +chatDetails)
+    //   state.profiles = chatDetails;
 
-      // console.log('this is the profiles:  '+ chatDetails )
+    //   // console.log('this is the profiles:  '+ chatDetails )
+    // },
+    // addNewMesseges(state, newMessage) {
+    //   state.chats.push(newMessage);
+    // },
+    firebasedata(state, newMessage) {
+      state.firebaseData = newMessage;
     },
-    addNewMesseges(state, newMessage) {
-      state.chats.push(newMessage);
-    },
-    firebasedata(state, newChatsFirebase) {
-      state.firebaseData = newChatsFirebase;
+    addMessage(state, newMessage) {
+ 
+  console.log("hello"+ state + newMessage)
     },
   },
   actions: {
@@ -50,6 +65,11 @@ export default new Vuex.Store({
           this.commit("setTodos", todos);
         });
     },
+    userslogin( {commit} , user)
+    {
+      commit("setUsers" , user)
+
+    },
     chattings({ commit }, items) {
       commit("setChatting", items);
     },
@@ -57,17 +77,40 @@ export default new Vuex.Store({
       const arrays2 = ["hello"];
       this.commit("newData", arrays2);
     },
-    chatListDetails({ commit }, chatDetails) {
-      // Commit the mutation to update the state with chat details
-      commit("SET_CHAT_DETAILS", chatDetails);
-    },
-    newChats({ commit }, newMessage) {
-      commit("addNewMesseges", newMessage);
-    },
+    // chatListDetails({ commit }, chatDetails) {
+    //   // Commit the mutation to update the state with chat details
+    //   commit("SET_CHAT_DETAILS", chatDetails);
+    // },
+    // newChats({ commit }, newMessage) {
+    //   commit("addNewMesseges", newMessage);
+    // },
+   
 
-    FirebaseData({ commit }, newChatsFirebase) {
-      commit("firebasedata", newChatsFirebase);
+    // FirebaseData({ commit }, newChatsFirebase) {
+    //   commit("firebasedata", newChatsFirebase);
+    // },
+    fetchFirebaseDatabase({ commit }) {
+      const chatsRef = collection(db, "Chats");
+       // Subscribe to changes in the 'chats' collection
+      const unsubscribe = onSnapshot(chatsRef, (snapshot) => {
+        const newMessage =  snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log("Chat Data:", newMessage);
+       
+        commit("firebasedata", newMessage);
+        
+       
+      });
+
+      // To stop listening for changes when the component is destroyed
+      this.beforeDestroy = unsubscribe;
     },
+    sendMessageToFirebase( {commit } , messageData){
+      commit('addMessage', messageData);
+    },
+   
   },
   getters: {
     counting: (state) => {
@@ -76,7 +119,11 @@ export default new Vuex.Store({
     getChatListDetails: (state) => state.profiles,
     getChats: (state) => state.chats,
 
+
+    
     getFirebaseDataFromStore: (state) => state.firebaseData,
+    ActiveUser: (state) => state.userLoggedIn,
+    
   },
 
   // getters:{
@@ -85,4 +132,5 @@ export default new Vuex.Store({
   //     },
 
   // },
+  
 });

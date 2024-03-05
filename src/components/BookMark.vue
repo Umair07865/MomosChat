@@ -1,5 +1,5 @@
 <template>
-    <div class="bookmark border p-2 pl-3 pr-3  text-dark" v-if="defaultControler">
+    <div class="bookmark border p-2 pl-3 pr-3  text-dark" >
        <i class="fa-solid fa-plus  "></i> Add a bookmark
 
     </div>
@@ -35,14 +35,14 @@ export default {
 
     
   },
-     watch: {
-  'chatListDetails.name': {
-    handler() {
-      this.profileDefalut();
-    },
-    immediate: true, // This option will trigger the handler immediately after the component is created
-  },
-},
+//      watch: {
+//   'chatListDetails.name': {
+//     handler() {
+//       this.profileDefalut();
+//     },
+//     immediate: true, // This option will trigger the handler immediately after the component is created
+//   },
+// },
 }
 </script>
 

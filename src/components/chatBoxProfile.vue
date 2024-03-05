@@ -1,5 +1,5 @@
 <template>
-  <div class="userProfile" v-if="defaultControler">
+  <div class="userProfile" >
     <div class="wrapper d-flex justify-content-start align-items-center">
       <img :src="chatListDetails.Img" alt="Loading" class="profileImages" />
       <div class="ProfileInfo pl-4 pr-4">
@@ -91,14 +91,14 @@ export default {
     
   },
 
- watch: {
-  'chatListDetails.name': {
-    handler() {
-      this.profileDefalut();
-    },
-    immediate: true, // This option will trigger the handler immediately after the component is created
-  },
-},
+//  watch: {
+//   'chatListDetails.name': {
+//     handler() {
+//       this.profileDefalut();
+//     },
+//     immediate: true, // This option will trigger the handler immediately after the component is created
+//   },
+// },
 
 
 };

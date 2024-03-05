@@ -1,5 +1,5 @@
 <template>
-    <div class="headerSection container-fluid border pt-2 pb-2 d-flex justify-content-between align-items-center" v-if="defaultControler"  >
+    <div class="headerSection container-fluid border pt-2 pb-2 d-flex justify-content-between d-block align-items-center" >
             <span class="d-flex align-items-center " >
         <img :src="chatListDetails.Img" alt="loading"  >
         <div class="dropdown">

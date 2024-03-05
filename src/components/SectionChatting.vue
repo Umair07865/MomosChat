@@ -1,37 +1,39 @@
 <template>
   <div
     class="outerWrapperChatting bg-Success text-dark bg-white"
-    v-show="defaultControler"
+ 
     ref="chatContainer"
   >
     <ul class="p-0 m-0 chattingList">
       <li
         class="d-flex pl-2"
-        v-for="(item, index) in chattingList"
+        v-for="(item, index) in firebaseData"
         :key="index"
       >
         <img
-          :src="chatListDetails.Img"
+          :src="item.profileImage"
           alt="loading"
           class="profileImagesChats"
         />
         <span>
           <b>
             <h6 class="pl-2 mb-0 font-weight-bold">
-              {{ chatListDetails.name }}
+             
+                 {{ item.name}}
             </h6>
           </b>
-          <p class="Messeges p-2 text-justify">kjk {{ item }}</p>
+          <p class="Messeges p-2 text-justify">{{ item.messegeLast }}</p>
         </span>
       </li>
+
+      
+      
     </ul>
   </div>
 </template>
 
 <script>
 
-import { onSnapshot, collection } from "firebase/firestore";
-import { db } from "@/firebase";
 import { myMixin } from "../mixins";
 export default {
   name: "SectionChatting",
@@ -40,11 +42,11 @@ export default {
     return {
       items: [],
       newChatsFirebase: [],
+
     };
+
   },
-  created() {
-    this.fetchFirebaseDatabase();
-  },
+
   computed: {
     chatListDetails() {
       try {
@@ -58,32 +60,36 @@ export default {
         return {}; // Return a default value or handle the error appropriately
       }
     },
-    chattingList() {
-      return this.$store.getters.getChats;
+    firebaseData() {
+       return this.$store.getters.getFirebaseDataFromStore;
     },
   },
-  methods: {
-    async fetchFirebaseDatabase() {
-      const chatsRef = collection(db, "Chats");
-       // Subscribe to changes in the 'chats' collection
-      const unsubscribe = onSnapshot(chatsRef, (snapshot) => {
-        this.chats = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        console.log("Chat Data:", this.chats);
-        this.newChatsFirebase = this.chats;
-        this.$store.dispatch("FirebaseData", this.newChatsFirebase);
-      });
-
-      // To stop listening for changes when the component is destroyed
-      this.$once("hook:beforeDestroy", unsubscribe);
-    },
+//  created()
+//  {
+//    this.$store.dispatch("fetchFirebaseDatabase");
+    
+//  },
+   mounted() {
+    this.$store.dispatch('fetchFirebaseDatabase');
+   
   },
-  mounted() {
-    this.$store.dispatch("chattings", this.items);
+ 
+  // mounted() {
+  //   this.$store.dispatch("chattings", this.items);
     //  this.scrollToBottom();
-  },
+//    const dbRef = ref(database, 'Chats/Messeges');
+
+// get(dbRef).then((snapshot) => {
+//   if (snapshot.exists()) {
+//     console.log(snapshot.val());
+//   } else {
+//     console.log("No data available");
+//   }
+// }).catch((error) => {
+//   console.error(error);
+// });
+
+  // },
   watch: {
     "chatListDetails.name": {
       handler() {

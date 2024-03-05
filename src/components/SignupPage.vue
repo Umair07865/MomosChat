@@ -3,13 +3,15 @@
    
   
   </div> -->
+  <div class="wrapper">
+
   <div
     v-if="!registered"
-    class="outerWrapperForm d-flex flex-md-row flex-column"
+    class="outerWrapperForm d-flex flex-lg-row flex-sm-col flex-column "
   >
     <b-form
-      @submit.stop.prevent="onSubmit"
-      class="d-flex flex-column justify-content-center col col-md-6 p-5 align-items-center"
+      @submit.prevent="onSubmit"
+      class="d-flex flex-column justify-content-center col col-lg-6 col-sm-12  align-items-center"
     >
       <b-row>
         <b-col><h1>Sign Up</h1></b-col>
@@ -31,7 +33,7 @@
         </b-col>
       </b-row>
       <b-row class="col d-flex justify-content-between flex-grow-0">
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
             id="example-input-group-1"
             label="FirstName"
@@ -46,35 +48,35 @@
               aria-describedby="input-1-live-feedback"
             ></b-form-input>
 
-            <b-form-invalid-feedback id="input-1-live-feedback"
+            <b-form-invalid-feedback id="input-1.1-live-feedback"
               >This is a required field and must be at least 3
               characters.</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-1-live-feedback"
+            <b-form-valid-feedback id="input-1.2-live-feedback"
               >Perfect!</b-form-valid-feedback
             >
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
-            id="example-input-group-1"
+            id="example-input-group-2"
             label="LastName"
-            label-for="example-input-1"
+            label-for="example-input-2"
           >
             <b-form-input
-              id="example-input-1"
-              LastName="example-input-1"
+              id="example-input-2"
+              LastName="example-input-2"
               placeholder="Last Name"
               v-model="$v.form.LastName.$model"
               :state="validateStateLastName('LastName')"
-              aria-describedby="input-1-live-feedback"
+              aria-describedby="input-2-live-feedback"
             ></b-form-input>
 
-            <b-form-invalid-feedback id="input-1-live-feedback"
+            <b-form-invalid-feedback id="input-2.1-live-feedback"
               >This is a required field and must be at least 3
               characters.</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-1-live-feedback"
+            <b-form-valid-feedback id="input-2.2-live-feedback"
               >Perfect!</b-form-valid-feedback
             >
           </b-form-group>
@@ -83,43 +85,43 @@
 
       <!--second column-->
       <b-row class="col d-flex justify-content-between flex-grow-0">
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
-            id="example-input-group-1"
+            id="example-input-group-3"
             label="UserName"
-            label-for="example-input-1"
+            label-for="example-input-3"
           >
             <b-form-input
-              id="example-input-1"
-              UserName="example-input-1"
+              id="example-input-3"
+              UserName="example-input-3"
               placeholder="User Name"
               v-model="$v.form.UserName.$model"
               :state="validateStateUserName('UserName')"
-              aria-describedby="input-1-live-feedback"
+              aria-describedby="input-3-live-feedback"
             ></b-form-input>
 
-            <b-form-invalid-feedback id="input-1-live-feedback"
+            <b-form-invalid-feedback id="input-3.1-live-feedback"
               >This is a required field and must be at least 5
               characters.</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-1-live-feedback"
+            <b-form-valid-feedback id="input-3.2-live-feedback"
               >Perfect!</b-form-valid-feedback
             >
           </b-form-group>
         </b-col>
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
-            id="example-input-group-1"
+            id="example-input-group-4"
             label="Password"
-            label-for="example-input-1"
+            label-for="example-input-4"
           >
             <b-form-input
-              id="example-input-1"
-              Password="example-input-1"
+              id="example-input-4"
+              Password="example-input-4"
               placeholder="Password"
               v-model="$v.form.Password.$model"
               :state="validateStatePassword('Password')"
-              aria-describedby="input-1-live-feedback"
+              aria-describedby="input-4-live-feedback"
               :type="showPassword ? 'text' : 'password'"
               class="col-12"
             >
@@ -128,13 +130,13 @@
 
             <!---eye button to show password ending here-->
 
-            <b-form-invalid-feedback id="input-1-live-feedback">
+            <b-form-invalid-feedback id="input-4.1-live-feedback">
               Password must meet the following criteria: - Minimum length of 8
               characters - Numeric characters - At least one capital letter - At
               least one
               symbol!@#$%^&*()_+{}[]:;,.?~\\/-</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-1-live-feedback">
+            <b-form-valid-feedback id="input-4.2-live-feedback">
               Perfect! Password</b-form-valid-feedback
             >
 
@@ -147,21 +149,21 @@
       </b-row>
       <!--third column-->
       <b-row class="col d-flex justify-content-between flex-grow-0">
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <!------>
           <b-form-group
-            id="example-input-group-2"
+            id="example-input-group-5"
             label="Confirm Password"
-            label-for="example-input-2"
+            label-for="example-input-5"
           >
             <!-- <div> -->
               <b-form-input
-                id="example-input-1"
-                confirmPassword="example-input1"
+                id="example-input-5"
+                confirmPassword="example-input5"
                 placeholder="Confirm Password"
                 v-model="$v.form.confirmPassword.$model"
                 :state="validateStateConfirmPassword('confirmPassword')"
-                aria-describedby="input-2-live-feedback"
+                aria-describedby="input-5-live-feedback"
                 :type="showPassword ? 'text' : 'password'"
               ></b-form-input>
 
@@ -185,10 +187,10 @@
               <!-- </b-input-group-append> -->
             <!-- </div> -->
 
-            <b-form-invalid-feedback id="input-2-live-feedback">
+            <b-form-invalid-feedback id="input-5.1-live-feedback">
               Password must be same invalid input</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-2-live-feedback">
+            <b-form-valid-feedback id="input-5.2-live-feedback">
               Thanks! for the confirmation</b-form-valid-feedback
             >
             <strong :class="getStrengthClass()">Password Strength</strong>
@@ -198,37 +200,37 @@
           </b-form-group>
           <!------>
         </b-col>
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
-            id="example-input-group-1"
+            id="example-input-group-6"
             label="UserEmail"
-            label-for="example-input-1"
+            label-for="example-input-6"
           >
             <b-form-input
-              id="example-input-1"
-              UserEmail="example-input-1"
+              id="example-input-6"
+              UserEmail="example-input-6"
               placeholder="Email Address"
               v-model="$v.form.UserEmail.$model"
               :state="validateStateUserEmail('UserEmail')"
-              aria-describedby="input-1-live-feedback"
+              aria-describedby="input-6-live-feedback"
             ></b-form-input>
 
-            <b-form-invalid-feedback id="input-1-live-feedback"
+            <b-form-invalid-feedback id="input-6.1-live-feedback"
               >This is a required field and must follows email pattern
               example@gmail.com</b-form-invalid-feedback
             >
-            <b-form-valid-feedback id="input-1-live-feedback">
-              Perfect! Email Address</b-form-valid-feedback
+            <b-form-valid-feedback id="input-6.2-live-feedback">
+              Perfect! Email Address: {{form.UserEmail}}</b-form-valid-feedback
             >
           </b-form-group>
         </b-col>
       </b-row>
       <b-row class="col d-flex justify-content-between flex-grow-0">
-        <b-col>
+        <b-col class="col-12 col-md-6">
           <b-form-group
-            id="example-input-group-1"
+            id="example-input-group-7"
             label="User Profile Image"
-            label-for="example-input-1"
+            label-for="example-input-7"
           >
             <b-form-file
               v-model="file1"
@@ -238,20 +240,15 @@
               placeholder="Choose Your Profile Picture..."
               drop-placeholder="Drop file here..."
             ></b-form-file>
-            <b-form-invalid-feedback id="input-1-live-feedback">
+            <b-form-invalid-feedback id="input-7.1-live-feedback">
               {{ validateFile() ? "" : "This is a required field" }}
             </b-form-invalid-feedback>
-            <b-form-valid-feedback id="input-1-live-feedback">
+            <b-form-valid-feedback id="input-7.2-live-feedback">
               File Successfully Added <span>{{ file1 ? file1.name : "" }}</span>
             </b-form-valid-feedback>
           </b-form-group>
 
-          <!-- <b-form-invalid-feedback id="input-1-live-feedback">
-      {{ validateFile() ? '' : 'This is a required field' }}
-    </b-form-invalid-feedback>
-    <b-form-valid-feedback id="input-1-live-feedback">
-      File Successfully Added <span>this is  : {{file1}}</span>
-    </b-form-valid-feedback> -->
+       
         </b-col>
       </b-row>
 
@@ -261,13 +258,13 @@
         <b-col md="12">
           <b-button type="submit" variant="outline btnsubmit">Sign Up</b-button>
           <span>OR</span>
-          <b-button variant="primary" class="m-2">Signup with Google</b-button>
+          <b-button variant="primary" class="m-2" @click="signInWithGoogle()">Signup with Google</b-button>
         </b-col>
       </b-row>
     </b-form>
 
     <div
-      class="SignUpleftLogoPartition d-flex align-items-center justify-content-center col col-md-6 p-4"
+      class="SignUpleftLogoPartition d-flex align-items-center justify-content-center col col-lg-6 col-sm-12   p-4"
     >
       <span>
         <h2>Welcome to the MomosChat</h2>
@@ -279,9 +276,21 @@
       </span>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
+
+// import 'firebase/auth';
+// Update the path accordingly
+// import { GoogleAuthProvider } from 'firebase/auth';
+// import { auth } from 'firebase/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider , createUserWithEmailAndPassword} from 'firebase/auth';
+import { doc,db, setDoc } from '../firebase'; // Adjust the path accordingly
+
+
 import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
 
@@ -297,7 +306,7 @@ const emailPattern = (value) => {
 };
 
 
-
+import 'firebase/auth';
 //email validation
 export default {
   mixins: [validationMixin],
@@ -311,6 +320,7 @@ export default {
         Password: null,
         confirmPassword: null,
         UserEmail: null,
+        imgurl:null,
       },
       file1: null,
       selectedFile: null,
@@ -343,10 +353,8 @@ export default {
       },
       confirmPassword: {
         required,
-        minLength: minLength(5),
-        hasNumber,
-        hasCapitalLetter,
-        hasSymbol,
+      sameAsPassword: function(value) {
+          return value === this.form.Password}
         
          
       },
@@ -364,6 +372,7 @@ export default {
     getImageUrl() {
       return URL.createObjectURL(this.file1);
     },
+   
   
   },
   methods: {
@@ -384,20 +393,15 @@ export default {
       const { $dirty, $error } = this.$v.form[validateStatePassword];
       return $dirty ? !$error : null;
     },
-   validateStateConfirmPassword(validateStateConfirmPassword) {
-  const { $dirty, $error } = this.$v.form[validateStateConfirmPassword];
-      return $dirty ? !$error : null;
-  
+    validateStateConfirmPassword() {
+  // Ensure this points correctly to your confirmPassword validation
+  const validationState = this.$v.form.confirmPassword;
+
+  // Not interacted yet or has error
+  if (!validationState.$dirty) return null; // Not touched, don't show validation feedback
+  return !validationState.$error; // true if no validation error, false otherwise
 },
 
-  //    checkConfirmPass(confirmPassword)
-  //  {
-  //        if (confirmPassword==this.Password) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //  },
 
     validateStateUserEmail(validateStateUserEmail) {
       const { $dirty, $error } = this.$v.form[validateStateUserEmail];
@@ -414,14 +418,73 @@ export default {
         this.$v.$reset();
       });
     },
-    onSubmit() {
-      this.$v.form.$touch();
+  async signInWithGoogle() {
+      try {
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        console.log('Successfully signed in with Google!');
+        console.log('User Info:', user);
+
+        // You can now use 'user' to access information about the signed-in user
+        // For example, user.uid, user.displayName, user.email, etc.
+      } catch (error) {
+        console.error('Google Sign-In Error:', error.message);
+      }
+    },
+    // onsubmit methods
+      async onSubmit() {
+      try {
+        const auth = getAuth();
+       
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          this.form.UserEmail,
+          this.form.Password
+
+        );
+ const user = userCredential.user;
+        
+   const additionalUserData = {
+      firstName: this.form.FirstName,
+      lastName: this.form.LastName,
+      userName: this.form.UserName,
+      password:this.form.Password,
+      confirmPassword:this.form.confirmPassword,
+      profileimage: this.getImageUrl
+      
+
+      // Add other fields as needed
+    };
+    const userDocRef = doc(db, 'users', user.uid); // Assuming 'users' is your Firestore collection
+    await setDoc(userDocRef, additionalUserData, { merge: true });
+        // You can access user data using userCredential.user
+       
+        alert("Firebase login succesful")
+        console.log('Successfully logged in with email:', user);
+        this.$store.dispatch("userslogin" , user);
+        localStorage.setItem("datas" , user);
+         alert("Form submitted!");
+       this.$router.push('/');
+
+        // Optionally, you can fetch additional user data from Firestore or another database
+        // and store it in your Vuex store or component state.
+        // Example: this.$store.dispatch('fetchUserData', user.uid);
+      } catch (error) {
+        alert("firebase authentication failed")
+        console.error('Login error:', error.message );
+        
+      }
+       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
 
-      alert("Form submitted!");
+     
     },
+    
     updatePasswordStrength() {
       const password = this.form.Password;
 
@@ -438,26 +501,7 @@ export default {
       }
     },
 
-    // updateConfirmPasswordStrength() {
-    //   // const confirmPassword = this.form.confirmPassword;
-    //   if (this.Password == this.confirmPassword) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-
-      // if (confirmPassword.length < 8) {
-      //   this.passwordStrength = "Weak";
-      // } else if (
-      //   hasNumber(confirmPassword) &&
-      //   hasCapitalLetter(confirmPassword) &&
-      //   hasSymbol(confirmPassword)
-      // ) {
-      //   this.passwordStrength = "Strong";
-      // } else {
-      //   this.passwordStrength = "Moderate";
-      // }
-    // },
+  
     getStrengthClass() {
       return {
         "text-danger": this.passwordStrength === "Weak",
@@ -499,17 +543,13 @@ export default {
   margin: 0 !important;
   font-family: poppins;
 
-  padding: 2rem;
+
 }
 body {
-  overflow-y: scroll;
+ 
   box-sizing: border-box;
 }
-.outerWrapperForm {
-  /* padding: 2rem; */
-  /* background-color: rgb(104, 58, 119) !important; */
-  background: linear-gradient(to bottom rgb(86, 49, 91), rgb(124, 73, 132));
-}
+
 .SignUpleftLogoPartition {
   background-image: url("~@/assets/signup.png");
 
@@ -533,6 +573,7 @@ h1 {
 }
 form {
   background-color: rgb(255, 255, 255);
+  padding: 3rem;
 }
 
 input {
@@ -575,5 +616,37 @@ input {
   height: 100px;
   width: 100px;
   margin: 1rem 0 1rem 0;
+}
+.wrapper{
+  height: 100vh;
+  width: 100%;
+  overflow: scroll;
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+align-items: center;
+}
+@media (max-width:1024px) {
+  form{
+    padding: 2rem 0 2rem 0;
+  }
+  
+}
+@media (max-width:768px) {
+  #app{
+    padding:0;
+  }
+  .wrapper{
+    padding: 0;
+    display: block;
+    
+  }
+  
+}
+@media (max-width:425px) {
+  form{
+    padding:2rem 0 2rem 0 !important;
+  }
+  
 }
 </style>

@@ -7,12 +7,12 @@
         >
           <div class="controller">
             <ul
-              class="d-flex flex-column justify-content-between  gap-5"
+              class="d-flex flex-column justify-content-between align-items-center gap-5"
             >
               <li>
                 <img
                   class="imageControls"
-                 :src="require('@/assets/MomosChat.png')"
+                  :src="require('@/assets/MomosChat.png')"
                   alt="Logo"
                   @click="reloadControler"
                 />
@@ -20,6 +20,7 @@
 
               <li>
                 <i class="fa-solid fa-house text-white"></i>
+               
                 <span class="text-white">home</span>
               </li>
 
@@ -35,6 +36,9 @@
               <li>
                 <i class="fa-solid fa-ellipsis text-white"></i>
                 <span class="text-white">More</span>
+              </li>
+              <li>
+                  <b-button variant="outline-light rounded"  class="col" @click="logoutLogic">Logout</b-button>
               </li>
             </ul>
           </div>
@@ -98,283 +102,286 @@
           </ul>
 
           <!--Chanels-->
-           <div class="dropdown">
-              <a
-                class="btn bg-0 text-white dropDownButton dropdown-toggle  channelsDropDown mt-2 mb-2"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-               @click="channelsControlling"
-               
-              >
-                Channels
-              </a>
+          <div class="dropdown">
+            <a
+              class="btn bg-0 text-white dropDownButton dropdown-toggle channelsDropDown mt-2 mb-2"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              @click="channelsControlling"
+            >
+              Channels
+            </a>
+          </div>
 
-             
-            </div>
+          <!--channel list-->
+          <ul class="chatsListWrapper" v-show="channels">
+            <li
+              class="text-white hashTagList"
+              v-for="(hash, index) in hashTags"
+              :key="index"
 
-
-            <!--channel list-->
-            <ul class="chatsListWrapper" v-show="channels">
-              <li class="text-white hashTagList" v-for="(hash, index) in hashTags" :key="index">
-              <span class="HASH"> #</span> {{hash}}
-              </li>
-              
-
-            </ul>
-             <div class="addChannels  d-flex align-items-center">
-              
-                <i
-              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon "
+            >
+              <span class="HASH"> #</span> {{ hash }}
+            </li>
+          </ul>
+          <div class="addChannels d-flex align-items-center">
+            <i
+              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon"
             ></i>
             <span class="text-white">Add Channels</span>
-            </div>
+          </div>
 
-            <!--Direct Messeges-->
-             <div class="dropdown" @click="chattingController">
-              <a
-                class="btn bg-0 text-white dropDownButton dropdown-toggle  channelsDropDown mt-2 mb-2"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Direct Messeges
-              </a>
+          <!--Direct Messeges-->
+          <div class="dropdown" @click="chattingController">
+            <a
+              class="btn bg-0 text-white dropDownButton dropdown-toggle channelsDropDown mt-2 mb-2"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Direct Messeges
+            </a>
+          </div>
 
-             
-            </div>
+          <ul class="DirectMesseges chatsListWrapper " v-show="chatsControl">
+            <li v-for="(chatDetails, index) in firebaseData" :key="index" >
+              <img class="imageControls" :src="chatDetails.profileImage" alt="Logo" />
 
-            <ul class="DirectMesseges  chatsListWrapper " v-show="chatsControl">
-              <li v-for="(chats, nindex) in chats" :key="nindex"  @click="chatsControlling(nindex)">
-               
-                 <img
-              class="imageControls"
-              :src="chats.Img"
-              alt="Logo"
-            />
-             <span :class="'rounded-circle  ActiveTrackerChats' " ></span>
+              <span :class="'rounded-circle  ActiveTrackerChats'"></span>
 
-          <span class="text-white">{{chats.name}}</span>
-
-              </li>
-            </ul>
-             <div class="addChannels  d-flex align-items-center">
-              
-                <i
-              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon "
+              <span class="text-white">{{ chatDetails.name }}</span>
+            </li>
+          </ul>
+          <div class="addChannels d-flex align-items-center">
+            <i
+              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon"
             ></i>
             <span class="text-white">Add Coworkers</span>
-            </div>
+          </div>
 
-             <div class="dropdown">
-              <a
-                class="btn bg-0 text-white dropDownButton dropdown-toggle  channelsDropDown mt-2 mb-2"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                @click="appsControl"
-              >
-                Apps
-              </a>
+          <div class="dropdown">
+            <a
+              class="btn bg-0 text-white dropDownButton dropdown-toggle channelsDropDown mt-2 mb-2"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              @click="appsControl"
+            >
+              Apps
+            </a>
+          </div>
+          <ul class="DirectMesseges chatsListWrapper" v-show="appsControls">
+            <li v-for="(app, index) in apps" :key="index">
+              <img class="imageControls" :src="app.img" alt="Logo" />
 
-             
-            </div>
-            <ul class="DirectMesseges  chatsListWrapper " v-show="appsControls" >
-              <li v-for="(app, index) in apps" :key="index" >
-               
-                 <img
-              class="imageControls"
-              :src="app.img"
-              alt="Logo"
-            />
-             
-
-          <span class="text-white">{{app.appName}}</span>
-
-              </li>
-            </ul>
-
-            <!--add apps-->
-             <div class="addChannels  d-flex align-items-center">
-              
-                <i
-              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon "
+              <span class="text-white">{{ app.appName }}</span>
+            </li>
+          </ul>
+        
+          <!--add apps-->
+          <div class="addChannels d-flex align-items-center">
+            <i
+              class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon"
             ></i>
             <span class="text-white">Add Apps</span>
-            </div>
-            <!-- <GoogleSignup/> -->
            
+          </div>
 
+            
+
+          <!-- <GoogleSignup/> -->
         </div>
-         <ChatBoxSection/>
-        <div class="col-8 border bg-white OuterColumns p-0 " style="overflow-y: scroll">
-          <!--header section-->
-
         
-         
-          <BookMark/>
-          <chatBoxProfile/>
-          <SectionChatting/>
-          <MessegeBox/>
+
+        <div
+          class="col-8 border bg-white OuterColumns p-0"
+          style="overflow-y: scroll"
+        >
+          <!--header section-->
+          <ChatBoxSection />
+          <div >
+ 
+
+  <b-modal id="modal-center" centered title="BootstrapVue"  v-b-modal.modal-center>
+    <p class="my-4">Vertically centered modal!</p>
+  </b-modal>
+</div>
+
+          <BookMark />
+          <chatBoxProfile />
+          <SectionChatting />
+          <MessegeBox />
           <!-- <GoogleSignup/> -->
           <!-- <LoaderComp /> -->
-        
         </div>
       </div>
     </div>
   </section>
 </template>
 
-
 <script>
-import ChatBoxSection from "../components/ChatBoxSection.vue"
-import BookMark from "../components/BookMark.vue"
-import chatBoxProfile from "../components/chatBoxProfile.vue"
-import MessegeBox from "../components/MessegeBox.vue"
-import SectionChatting from "./SectionChatting.vue"
+import ChatBoxSection from "../components/ChatBoxSection.vue";
+import BookMark from "../components/BookMark.vue";
+import chatBoxProfile from "../components/chatBoxProfile.vue";
+import MessegeBox from "../components/MessegeBox.vue";
+import SectionChatting from "./SectionChatting.vue";
+// import { onMounted } from 'vue';
 // import GoogleSignup from "../components/GoogleSignup.vue"
 
 export default {
   name: "GridSystem",
-  components:{
+  components: {
     ChatBoxSection,
     BookMark,
     chatBoxProfile,
     MessegeBox,
- 
-    SectionChatting
+
+    SectionChatting,
     // LoaderComp
-    
   },
-  data()
-  {
+  data() {
+    return {
+      hashTags: ["Daily-Standup", "general", "office-issues"],
 
-    return{
-      hashTags:["Daily-Standup","general","office-issues"],
-     
-      chats:[
-        {name:"M Umar",
-        Img:"https://ca.slack-edge.com/TGFFD750S-U01BSC64A4R-179538f6d735-512",
-        status:"online",
-        id:"UM1",
-         occopation:"Back End Developer",
-         sudo:" M - Umar"
-
+      chats: [
+        {
+          name: "M Umar",
+          Img: "https://ca.slack-edge.com/TGFFD750S-U01BSC64A4R-179538f6d735-512",
+          status: "online",
+          id: "UM1",
+          occopation: "Back End Developer",
+          sudo: " M - Umar",
         },
-         {name:"Ali Hamza",
-        Img:"https://ca.slack-edge.com/TGFFD750S-U049NKVSRUH-g1ebd9252638-512",
-        status:"offline",
-        id:"AH2",
-         occopation:"Front End Developer",
-         sudo:"A - Hamza"
+        {
+          name: "Ali Hamza",
+          Img: "https://ca.slack-edge.com/TGFFD750S-U049NKVSRUH-g1ebd9252638-512",
+          status: "offline",
+          id: "AH2",
+          occopation: "Front End Developer",
+          sudo: "A - Hamza",
         },
-         {name:"Hamza Khan",
-        Img:"https://ca.slack-edge.com/TGFFD750S-U01M3G9QNJF-49b73568b2e9-512",
-        status:"online",
-        id:"HK3",
-         occopation:"Word Press Developer",
-         sudo:"H - Kahn"
+        {
+          name: "Hamza Khan",
+          Img: "https://ca.slack-edge.com/TGFFD750S-U01M3G9QNJF-49b73568b2e9-512",
+          status: "online",
+          id: "HK3",
+          occopation: "Word Press Developer",
+          sudo: "H - Kahn",
         },
-       {name:"M Izhan",
-        Img:"https://ca.slack-edge.com/TGFFD750S-UGETWMEKT-5f90600653a8-512",
-        status:"online",
-        id:"MI4",
-         occopation:"Back End Developer",
-         sudo:"M - Izhan",
-         profileLink:"@Mehran"
+        {
+          name: "M Izhan",
+          Img: "https://ca.slack-edge.com/TGFFD750S-UGETWMEKT-5f90600653a8-512",
+          status: "online",
+          id: "MI4",
+          occopation: "Back End Developer",
+          sudo: "M - Izhan",
+          profileLink: "@Mehran",
         },
-        {name:"Mehran",
-        Img:"https://ca.slack-edge.com/TGFFD750S-U01BGV6T1M0-49f86cfc927f-512",
-        status:"offline",
-        id:"MR5",
-        occopation:"Senior Full Stack Developer",
-         sudo:"Meh - ran"
+        {
+          name: "Mehran",
+          Img: "https://ca.slack-edge.com/TGFFD750S-U01BGV6T1M0-49f86cfc927f-512",
+          status: "offline",
+          id: "MR5",
+          occopation: "Senior Full Stack Developer",
+          sudo: "Meh - ran",
         },
-      {name:"Muhammad Umair You",
-        Img:"https://ca.slack-edge.com/TGFFD750S-U03L82UM1A4-20d772342fc4-72",
-        status:"online",
-        id:"MU6",
-         occopation:"Front End Developer",
-         sudo:"M - Umair"
+        {
+          name: "Muhammad Umair You",
+          Img: "https://ca.slack-edge.com/TGFFD750S-U03L82UM1A4-20d772342fc4-72",
+          status: "online",
+          id: "MU6",
+          occopation: "Front End Developer",
+          sudo: "M - Umair",
         },
-          
       ],
-      apps:[
-       {
-        appName:"SlackBot",
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxppenqShuGm97G24op4ZqfdBj_ITS42L4dEPPWgrhXasTbG8dCCpoqqfiqvTCYy0l1So&usqp=CAU"
-       }
+      users: "",
+      apps: [
+        {
+          appName: "SlackBot",
+          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxppenqShuGm97G24op4ZqfdBj_ITS42L4dEPPWgrhXasTbG8dCCpoqqfiqvTCYy0l1So&usqp=CAU",
+        },
       ],
 
-      channels:true,
-      chatsControl:true,
-      appsControls:true,
-      chatssData:"",
-    
-     
-
-    }
-    
-
-    
-  },
-  methods:{
-
-
-        channelsControlling()
-        {
-          this.channels=!this.channels;
-        },
-        chattingController()
-        {
-          this.chatsControl=!this.chatsControl;
-        },
-        appsControl()
-        {
-          this.appsControls=!this.appsControls;
-
-        
-        },
-        chatsControlling(nindex)
-        {
-        this.chatssData=this.chats[nindex];
+      channels: true,
+      chatsControl: true,
+      appsControls: true,
+      firebaseChatsData:""
       
-         this.chatssData= JSON.stringify(this.chatssData, null, 2)
-
-         
-        this.$store.dispatch("chatListDetails",this.chatssData);
-
-        //  console.log();
-
-           
-        },
-        reloadControler()
-        {
-          window.location.reload();
-        }
-
+    };
   },
+  
+  methods: {
+    channelsControlling() {
+      this.channels = !this.channels;
+    },
+    chattingController() {
+      this.chatsControl = !this.chatsControl;
+    },
+    appsControl() {
+      this.appsControls = !this.appsControls;
+    },
+    chatsControlling(nindex)
+    {
+    this.chatssData=this.chats[nindex];
 
-mounted() {
-  const chatElements = document.querySelectorAll(".ActiveTrackerChats");
+     this.chatssData= JSON.stringify(this.chatssData, null, 2)
 
-  this.chats.forEach((chat, index) => {
-    const element = chatElements[index];
-    
-    if (chat.status === "online") {
-      element.classList.add("bg-success");
-    } else if (chat.status === "offline") {
-      element.classList.add("bg-secondary");
+    this.$store.dispatch("chatListDetails",this.chatssData);
+
+    //  console.log();
+
+    },
+    reloadControler() {
+      window.location.reload();
+    },
+    userClients() {
+      this.firebaseChatsData = this.$store.getters.getFirebaseDataFromStore;
+      console.log("this is the data : " + this.firebaseChatsData)
+    },
+    userChecks()
+    {
+      if(!this.$store.getters.ActiveUser.accessToken)
+      {
+      this.$router.push('/SignupPage');
+
+      
+      }
+    },
+    logoutLogic()
+    {
+      this.$store.dispatch("de")
     }
-  });
+  },
+  computed:{
+ firebaseData() {
+       return this.$store.getters.getFirebaseDataFromStore;
+    },
+  },
+  mounted(){
+    this.$store.dispatch('fetchFirebaseDatabase');
+     console.log("haya  :: "+ this.$store.getters.ActiveUser.accessToken);
+    
+  }
+ 
 
+  // mounted() {
+  //   const chatElements = document.querySelectorAll(".ActiveTrackerChats");
 
-}
+  //   this.chats.forEach((chat, index) => {
+  //     const element = chatElements[index];
 
+  //     if (chat.status === "online") {
+  //       element.classList.add("bg-success");
+  //     } else if (chat.status === "offline") {
+  //       element.classList.add("bg-secondary");
+  //     }
+  //   });
 
+  // },
 };
 </script>
 
@@ -383,9 +390,13 @@ mounted() {
   overflow: hidden;
   color: black !important;
 } */
+#aap {
+  padding: 0 !important;
+}
 .controller ul {
   list-style: none;
   padding: 0 2rem;
+
   gap: 1rem;
 }
 .controller ul li span {
@@ -477,48 +488,43 @@ hr {
 .chatsListWrapper li:hover {
   background-color: rgb(92, 41, 100);
 }
-.channelsDropDown{
+.channelsDropDown {
   font-weight: 100;
   margin-left: 2rem;
   font-size: 1.1rem;
 }
-.HASH{
+.HASH {
   font-size: 1.3rem;
-  font-weight:bold;
+  font-weight: bold;
 }
-.hashTagList{
+.hashTagList {
   margin-top: 0px !important;
   padding: 0 5px !important;
 }
-.addingChannelsIcon{
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px !important;
-    padding: 0.4rem;
-    font-size: 0.6rem;
-
+.addingChannelsIcon {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px !important;
+  padding: 0.4rem;
+  font-size: 0.6rem;
 }
-.addChannels{
-gap:8px;
-padding: 0 2rem ;
+.addChannels {
+  gap: 8px;
+  padding: 0 2rem;
 }
-.ActiveTrackerChats{
- 
+.ActiveTrackerChats {
   position: relative;
-    padding: 3px;
-    right: 13px;
-    top: 10px;
-    outline: 2px solid rgb(53, 31, 59);
-    border: 1px solid white;
-  
+  padding: 3px;
+  right: 13px;
+  top: 10px;
+  outline: 2px solid rgb(53, 31, 59);
+  border: 1px solid white;
 }
-.DirectMesseges li{
-  margin: 0px 26px ;
-  gap:5px !important
-
+.DirectMesseges li {
+  margin: 0px 26px;
+  gap: 5px !important;
 }
-.DirectMesseges li img{
+.DirectMesseges li img {
   height: 1.5rem;
   width: 1.5rem;
 }
-
 </style>
