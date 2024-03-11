@@ -12,34 +12,34 @@ export default {
   components:{
     navigationBar
   },
-  methods:{ 
-        addingArrays()
-        {
-             this.$store.dispatch("addTodos");
+  // methods:{ 
+  //       addingArrays()
+  //       {
+  //            this.$store.dispatch("addTodos");
           
-        },  
-  },
-  computed: {
-    mystoreItems() {
-      return this.$store.state.todos.products;
-    },
-    calculateMyData()
-    {  
-        return this.$store.getters.counting;
-    }
-  },
+  //       },  
+  // },
+  // computed: {
+  //   mystoreItems() {
+  //     return this.$store.state.todos.products;
+  //   },
+  //   calculateMyData()
+  //   {  
+  //       return this.$store.getters.counting;
+  //   }
+  // },
 // now the first step is to despatch to the action
-  mounted()
-  {
-    this.$store.dispatch("fetchTodos");
-  },
-    watch: {
-    'mystoreItems.length'(newValue) {
-      console.log('Todos array changed:', newValue);
-      // You can perform additional actions here if needed
-    },
-    deep:true
-  },
+  // mounted()
+  // {
+  //   this.$store.dispatch("fetchTodos");
+  // },
+    // watch: {
+    // 'mystoreItems.length'(newValue) {
+    //   console.log('Todos array changed:', newValue);
+    //   // You can perform additional actions here if needed
+    // },
+//     deep:true
+//   },
 };
 </script>
 

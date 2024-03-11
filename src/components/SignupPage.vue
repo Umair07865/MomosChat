@@ -261,6 +261,16 @@
           <b-button variant="primary" class="m-2" @click="signInWithGoogle()">Signup with Google</b-button>
         </b-col>
       </b-row>
+
+          <b-row class="flex-grow-0">
+        <b-col md="12">
+         <span class="text-dark">
+          Already have an account click here 
+          <router-link to="/SignIn"> Sign In now </router-link>
+          for quick signin
+          </span> 
+        </b-col>
+      </b-row>
     </b-form>
 
     <div
@@ -453,7 +463,9 @@ export default {
       userName: this.form.UserName,
       password:this.form.Password,
       confirmPassword:this.form.confirmPassword,
-      profileimage: this.getImageUrl
+      profileimage: this.getImageUrl,
+     
+  
       
 
       // Add other fields as needed
@@ -467,7 +479,7 @@ export default {
         this.$store.dispatch("userslogin" , user);
         localStorage.setItem("datas" , user);
          alert("Form submitted!");
-       this.$router.push('/');
+       this.$router.push('/Signin');
 
         // Optionally, you can fetch additional user data from Firestore or another database
         // and store it in your Vuex store or component state.
@@ -519,7 +531,9 @@ export default {
       // Return the state based on the validation status
       return Boolean(this.file1) && !this.$v.file1?.$error;
     },
+  
   },
+ 
   watch: {
     "form.Password": "updatePasswordStrength",
     

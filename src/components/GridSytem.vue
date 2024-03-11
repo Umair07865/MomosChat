@@ -20,7 +20,7 @@
 
               <li>
                 <i class="fa-solid fa-house text-white"></i>
-               
+
                 <span class="text-white">home</span>
               </li>
 
@@ -38,7 +38,12 @@
                 <span class="text-white">More</span>
               </li>
               <li>
-                  <b-button variant="outline-light rounded"  class="col" @click="logoutLogic">Logout</b-button>
+                <b-button
+                  variant="outline-light rounded"
+                  class="col"
+                  @click="logoutLogic"
+                  >Logout</b-button
+                >
               </li>
             </ul>
           </div>
@@ -121,7 +126,6 @@
               class="text-white hashTagList"
               v-for="(hash, index) in hashTags"
               :key="index"
-
             >
               <span class="HASH"> #</span> {{ hash }}
             </li>
@@ -146,15 +150,24 @@
             </a>
           </div>
 
-          <ul class="DirectMesseges chatsListWrapper " v-show="chatsControl">
-            <li v-for="(chatDetails, index) in firebaseData" :key="index" >
-              <img class="imageControls" :src="chatDetails.profileImage" alt="Logo" />
+          <ul class="DirectMesseges chatsListWrapper" v-show="chatsControl">
+            <li v-for="(chatDetails, index) in firebaseData" :key="index">
+              <img
+                :src="
+                  chatDetails.profileImage
+                    ? ''
+                    : 'https://ca.slack-edge.com/TGFFD750S-U049NKVSRUH-g1ebd9252638-512'
+                "
+                alt="Selected Image"
+                class="imageControls"
+              />
 
               <span :class="'rounded-circle  ActiveTrackerChats'"></span>
 
-              <span class="text-white">{{ chatDetails.name }}</span>
+              <span class="text-white">{{ chatDetails.userName }}</span>
             </li>
           </ul>
+
           <div class="addChannels d-flex align-items-center">
             <i
               class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon"
@@ -181,21 +194,17 @@
               <span class="text-white">{{ app.appName }}</span>
             </li>
           </ul>
-        
+
           <!--add apps-->
           <div class="addChannels d-flex align-items-center">
             <i
               class="fa-solid fa-plus rounded-circle text-white addingChannelsIcon"
             ></i>
             <span class="text-white">Add Apps</span>
-           
           </div>
-
-            
 
           <!-- <GoogleSignup/> -->
         </div>
-        
 
         <div
           class="col-8 border bg-white OuterColumns p-0"
@@ -203,13 +212,16 @@
         >
           <!--header section-->
           <ChatBoxSection />
-          <div >
- 
-
-  <b-modal id="modal-center" centered title="BootstrapVue"  v-b-modal.modal-center>
-    <p class="my-4">Vertically centered modal!</p>
-  </b-modal>
-</div>
+          <div>
+            <b-modal
+              id="modal-center"
+              centered
+              title="BootstrapVue"
+              v-b-modal.modal-center
+            >
+              <p class="my-4">Vertically centered modal!</p>
+            </b-modal>
+          </div>
 
           <BookMark />
           <chatBoxProfile />
@@ -309,64 +321,100 @@ export default {
       channels: true,
       chatsControl: true,
       appsControls: true,
-      firebaseChatsData:""
-      
+      firebaseChatsData: "",
+      // firebaseData:''
+      FirebasefilePath: "",
     };
   },
-  
+
   methods: {
     channelsControlling() {
       this.channels = !this.channels;
     },
+
     chattingController() {
       this.chatsControl = !this.chatsControl;
     },
     appsControl() {
       this.appsControls = !this.appsControls;
     },
-    chatsControlling(nindex)
-    {
-    this.chatssData=this.chats[nindex];
+    chatsControlling(nindex) {
+      this.chatssData = this.chats[nindex];
 
-     this.chatssData= JSON.stringify(this.chatssData, null, 2)
+      this.chatssData = JSON.stringify(this.chatssData, null, 2);
 
-    this.$store.dispatch("chatListDetails",this.chatssData);
+      this.$store.dispatch("chatListDetails", this.chatssData);
 
-    //  console.log();
-
+      //  console.log();
     },
     reloadControler() {
       window.location.reload();
     },
     userClients() {
       this.firebaseChatsData = this.$store.getters.getFirebaseDataFromStore;
-      console.log("this is the data : " + this.firebaseChatsData)
+      console.log("this is the data : " + this.firebaseChatsData);
     },
-    userChecks()
-    {
-      if(!this.$store.getters.ActiveUser.accessToken)
-      {
-      this.$router.push('/SignupPage');
-
-      
+    userChecks() {
+      if (!this.$store.getters.ActiveUser.accessToken) {
+        this.$router.push("/SignupPage");
       }
     },
-    logoutLogic()
-    {
-      this.$store.dispatch("de")
-    }
+    logoutLogic() {
+      this.$router.push("/SignIn");
+    },
+    currentActiveUser() {
+      const userString = localStorage.getItem("users");
+      if (userString) {
+        // This checks that userString is not null or undefined
+        try {
+          console.log(JSON.parse(userString));
+          return JSON.parse(userString);
+          // Use the user object here
+        } catch (e) {
+          console.error("Error parsing user data:", e);
+          // Handle parsing error (e.g., userString was not valid JSON)
+        }
+      } else {
+        // Handle the case where there is no 'users' item in localStorage
+      }
+    },
+
+    //  async loadImageFromFirestore() {
+    //   // Assuming you have a function to get the image URL, replace this with your logic
+    //   this.firebaseData().array.forEach(e => {
+    //     this.profileImages = e.profileimage;
+    //   });
+    //   // Set the imageUrl in your component's data
+
+    // },
+    //   async loadImageFromFirestore() {
+    //   try {
+    //     const imageDataArray = this.firebaseData.map(e => {
+    //       console.log("ye hai  : "  +  URL.revokeObjectURL(e.profileimage))
+    //       return URL.revokeObjectURL(e.profileimage);
+    //     });
+
+    //     // Set the array of image URLs in your component's data
+    //     this.profileImageUrls = imageDataArray;
+    //   } catch (error) {
+    //     console.error('Error loading images from Firestore:', error);
+    //   }
+    // },
   },
-  computed:{
- firebaseData() {
-       return this.$store.getters.getFirebaseDataFromStore;
+  computed: {
+    firebaseData() {
+      return this.$store.getters.getFirebaseDataFromStore;
     },
   },
-  mounted(){
-    this.$store.dispatch('fetchFirebaseDatabase');
-     console.log("haya  :: "+ this.$store.getters.ActiveUser.accessToken);
-    
-  }
- 
+  mounted() {
+    this.$store.dispatch("fetchFirebaseDatabase");
+    console.log("haya  :: " + this.$store.getters.ActiveUser.accessToken);
+    this.currentActiveUser();
+
+    // this.getImageUrl();
+
+    console.log("firebase wala : " + this.firebaseDataImages);
+  },
 
   // mounted() {
   //   const chatElements = document.querySelectorAll(".ActiveTrackerChats");

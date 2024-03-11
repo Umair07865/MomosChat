@@ -7,12 +7,12 @@
     <ul class="p-0 m-0 chattingList">
       <li
         class="d-flex pl-2"
-        v-for="(item, index) in firebaseData"
+        v-for="(item, index) in Messegelist"
         :key="index"
       >
         <img
           :src="item.profileImage"
-          alt="loading"
+          alt="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
           class="profileImagesChats"
         />
         <span>
@@ -48,21 +48,25 @@ export default {
   },
 
   computed: {
-    chatListDetails() {
-      try {
-        const chatListDetailsString = this.$store.getters.getChatListDetails;
-        // Check if the string is empty before attempting to parse
-        if (chatListDetailsString.trim() === "") {
-          return {}; // Return a default value or handle the empty string case
-        }
-        return JSON.parse(chatListDetailsString);
-      } catch (error) {
-        return {}; // Return a default value or handle the error appropriately
-      }
-    },
-    firebaseData() {
-       return this.$store.getters.getFirebaseDataFromStore;
-    },
+     Messegelist()
+    {
+      return  this.$store.getters.allmesseges;
+    }
+  //   chatListDetails() {
+  //     try {
+  //       const chatListDetailsString = this.$store.getters.getChatListDetails;
+  //       // Check if the string is empty before attempting to parse
+  //       if (chatListDetailsString.trim() === "") {
+  //         return {}; // Return a default value or handle the empty string case
+  //       }
+  //       return JSON.parse(chatListDetailsString);
+  //     } catch (error) {
+  //       return {}; // Return a default value or handle the error appropriately
+  //     }
+  //   },
+  //   firebaseData() {
+  //      return this.$store.getters.getFirebaseDataFromStore;
+  //   },
   },
 //  created()
 //  {
@@ -70,9 +74,10 @@ export default {
     
 //  },
    mounted() {
-    this.$store.dispatch('fetchFirebaseDatabase');
+    this.Messegelist
+    
    
-  },
+},
  
   // mounted() {
   //   this.$store.dispatch("chattings", this.items);
@@ -90,14 +95,15 @@ export default {
 // });
 
   // },
-  watch: {
-    "chatListDetails.name": {
-      handler() {
-        this.profileDefalut();
-      },
-      immediate: true,
-    },
-  },
+  
+  // watch: {
+  //   "chatListDetails.name": {
+  //     handler() {
+  //       this.profileDefalut();
+  //     },
+  //     immediate: true,
+  //   },
+  // },
 };
 </script>
 

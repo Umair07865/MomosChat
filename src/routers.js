@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 
 // Import your components
 import HomePage from './components/HomePage.vue';
-
+import SignInPage  from  "./components/SignInPage.vue"
 import SignupPage from "./components/SignupPage.vue"
 Vue.use(VueRouter);
 
@@ -15,6 +15,10 @@ const routes = [
   {
     path: '/',
     component: SignupPage
+  },
+  {
+    path: '/SignIn',
+    component: SignInPage
   }
 ];
 
