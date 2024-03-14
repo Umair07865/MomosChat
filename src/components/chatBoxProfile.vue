@@ -1,12 +1,19 @@
 <template>
-  <div class="userProfile" >
+  <div class="userProfile">
     <div class="wrapper d-flex justify-content-start align-items-center">
-      <img :src="chatListDetails.Img" alt="Loading" class="profileImages" />
+      <img
+        :src="chatListDetails.profileImage
+                    ? ''
+                    : 'https://ca.slack-edge.com/TGFFD750S-U049NKVSRUH-g1ebd9252638-512'
+                "
+        alt="Loading"
+        class="profileImages"
+      />
       <div class="ProfileInfo pl-4 pr-4">
         <h6 class="m-0">
           <b> {{ chatListDetails.name }} </b>
         </h6>
-        <p class="m-0">{{ chatListDetails.occopation }}</p>
+        <p class="m-0">occopation</p>
         <p class="m-0">{{ chatListDetails.sudo }}</p>
       </div>
     </div>
@@ -46,17 +53,15 @@
   </div>
 </template>
 <script>
-
 import { myMixin } from "../mixins";
 
 export default {
   name: "chatBoxProfile",
-  mixins:[myMixin],
+  mixins: [myMixin],
   data() {
     return {
       defaultControler: "",
-      chatlistString:""
-
+      chatlistString: "",
     };
   },
   // methods: {
@@ -72,35 +77,31 @@ export default {
   // },
 
   computed: {
-      
     chatListDetails() {
-  try {
-    const chatListDetailsString = this.$store.getters.getChatListDetails;
+      try {
+        const chatListDetailsString = this.$store.getters.getChatListDetails;
 
-    // Check if the string is empty before attempting to parse
-    if (chatListDetailsString.trim() === '') {
-      return {}; // Return a default value or handle the empty string case
-    }
+        // Check if the string is empty before attempting to parse
+        if (chatListDetailsString.trim() === "") {
+          return {}; // Return a default value or handle the empty string case
+        }
 
-    return JSON.parse(chatListDetailsString);
-  } catch (error) {
-    // console.log('Error parsing JSON 4:', error);
-    return {}; // Return a default value or handle the error appropriately
-  }
-},
-    
+        return JSON.parse(chatListDetailsString);
+      } catch (error) {
+        // console.log('Error parsing JSON 4:', error);
+        return {}; // Return a default value or handle the error appropriately
+      }
+    },
   },
 
-//  watch: {
-//   'chatListDetails.name': {
-//     handler() {
-//       this.profileDefalut();
-//     },
-//     immediate: true, // This option will trigger the handler immediately after the component is created
-//   },
-// },
-
-
+  //  watch: {
+  //   'chatListDetails.name': {
+  //     handler() {
+  //       this.profileDefalut();
+  //     },
+  //     immediate: true, // This option will trigger the handler immediately after the component is created
+  //   },
+  // },
 };
 </script>
 

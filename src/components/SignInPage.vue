@@ -29,7 +29,30 @@
      
       <!--third column-->
       <b-row class="col d-flex justify-content-between flex-grow-0">
-       
+         <b-col class="col-12 col-md-6">
+          <b-form-group
+            id="example-input-group-3"
+            label="UserName"
+            label-for="example-input-3"
+          >
+            <b-form-input
+              id="example-input-3"
+              UserName="example-input-3"
+              placeholder="User Name"
+              v-model="$v.form.UserName.$model"
+              :state="validateStateUserName('UserName')"
+              aria-describedby="input-3-live-feedback"
+            ></b-form-input>
+
+            <b-form-invalid-feedback id="input-3.1-live-feedback"
+              >This is a required field and must be at least 5
+              characters.</b-form-invalid-feedback
+            >
+            <b-form-valid-feedback id="input-3.2-live-feedback"
+              >Perfect!</b-form-valid-feedback
+            >
+          </b-form-group>
+        </b-col>
         <b-col class="col-12 col-md-6">
           <b-form-group
             id="example-input-group-6"
@@ -170,6 +193,8 @@ export default {
       form: {
         Password: null,
         UserEmail: null,
+        UserName:null
+        
       },
     
       registered: false,
@@ -188,6 +213,10 @@ export default {
         // hasNumber,
         // hasCapitalLetter,
         // hasSymbol,
+      },
+      UserName:{
+        required,
+        minLength:minLength(5)
       },
 
       UserEmail: {
@@ -224,6 +253,10 @@ export default {
       return $dirty ? !$error : null;
     },
     validateStateUserEmail(validateStateUserEmail) {
+      const { $dirty, $error } = this.$v.form[validateStateUserEmail];
+      return $dirty ? !$error : null;
+    },
+    validateStateUserName(validateStateUserEmail) {
       const { $dirty, $error } = this.$v.form[validateStateUserEmail];
       return $dirty ? !$error : null;
     },
@@ -265,11 +298,18 @@ export default {
         const userCredential = await signInWithEmailAndPassword(
           auth,
           this.form.UserEmail,
-          this.form.Password
+          this.form.Password,
+         
 
         );
         const user = userCredential.user;
+         
        localStorage.setItem("users", JSON.stringify(user));
+      //  localStorage.setItem("NewAdmin", JSON.stringify(this.from.UserName));
+
+      //  localStorage.setItem("users", JSON.stringify(user));
+
+      
         this.$store.dispatch("activeUser", user)
           console.log('Successfully logged in with email:', user);
         if(user)

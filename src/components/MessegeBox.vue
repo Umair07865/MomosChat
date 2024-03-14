@@ -1,6 +1,7 @@
 <template>
-  <div class="messegeBox container col-12 p-2 border rounded bg-white"  >
+  <div class="messegeBox container col-12 p-2 border rounded bg-white">
     <!---message header-->
+  <b class="text-dark"> this is {{recieverid}} {{recievername}}</b>
     <div class="chatHeader topHeader d-flex p-1 align-items-center">
       <button
         type="button"
@@ -32,19 +33,23 @@
       name="messagebox"
       id="msgBox"
       ref="msgBoxTextingControl"
-      class=" border"
+      class="border"
       @keyup.enter="sendMessageLocal"
-    placeholder="Jot something down"
-       v-model="newMessage"> </textarea>
-   
-     <!-- :placeholder="
+      placeholder="Jot something down"
+      v-model="newMessage"
+    >
+    </textarea>
+
+    <!-- :placeholder="
         chatListDetails && chatListDetails.name
           ? 'Message ' + chatListDetails.name
           : 'Jot something down'
       " -->
 
     <!--file inserter-->
-    <div class="inserter p-1 bg-white d-flex  align-items-center justify-content-between">
+    <div
+      class="inserter p-1 bg-white d-flex align-items-center justify-content-between"
+    >
       <div class="chatHeader d-flex p-1 align-items-center">
         <label
           for="fileInput"
@@ -70,7 +75,10 @@
         <span class="dividerLine"></span>
         <button class="btn border operators">/</button>
       </div>
-       <i class="fa-solid fa-dove rounded-circle p-1 bg-dark " style="color:white; border:1px solid black"   ></i>
+      <i
+        class="fa-solid fa-dove rounded-circle p-1 bg-dark"
+        style="color: white; border: 1px solid black"
+      ></i>
     </div>
   </div>
 </template>
@@ -82,11 +90,16 @@ import { myMixin } from "../mixins";
 export default {
   name: "MessegeBox",
   mixins: [myMixin],
+   props:['recieverid','recievername'],
   data() {
     return {
       newMessage: "",
+      recieverId : this.recieverid,
+      recieverName: this.recievername
+
     };
   },
+
   methods: {
     ...mapActions(['signInWithGoogle', 'sendMessage', 'receiveMessages']),
     handleFileChange(event) {
@@ -104,25 +117,27 @@ export default {
     //     alert("passed from component"+ message)
 
     //     // Clear the input field after sending the message
-      
+
     //     this.$store.dispatch("sendMessage",receiverId,message);
     //       this.newMessage = '';
     //   }
     // },e
     sendMessageLocal() {
   if (this.newMessage.trim() !== '') {
-    const receiverId = 'OokGI6YCMzRdgKnr8r0iwBFtNHT2'; // Replace with the actual receiver's user ID
+    const receiverId = this.recieverId // Replace with the actual receiver's user ID
+
+    alert("haya recieverid  ; " + receiverId)
     const message = this.newMessage.trim();
 
     // Dispatch the sendMessage action from the Vuex store
-  
+
     // Clear the input field after sending the message
     this.newMessage = '';
-    alert("chek from component : " + message)
+    // alert("chek from component : " + message)
      this.$store.dispatch("sendMessage", {receiverId, message});
 
   }
-},
+}
 
     // ... Your other methods
   },
@@ -131,7 +146,6 @@ export default {
     this.$store.dispatch("getAllMesseges");
   }
 };
-
 </script>
 
 <style scoped>

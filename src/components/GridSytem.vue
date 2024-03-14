@@ -151,7 +151,7 @@
           </div>
 
           <ul class="DirectMesseges chatsListWrapper" v-show="chatsControl">
-            <li v-for="(chatDetails, index) in firebaseData" :key="index">
+            <li v-for="(chatDetails, index) in firebaseData" :key="index" @click="userchatting(chatDetails.id,chatDetails.userName)">
               <img
                 :src="
                   chatDetails.profileImage
@@ -162,9 +162,14 @@
                 class="imageControls"
               />
 
-              <span :class="'rounded-circle  ActiveTrackerChats'"></span>
+              <span class="ActiveTrackerChats rounded-circle bg-success" v-if="chatDetails.id == adminid"    ></span>
+             
+              <span class="ActiveTrackerChats rounded-circle bg-muted" v-else></span>
+              
 
-              <span class="text-white">{{ chatDetails.userName }}</span>
+              <div class="text-white" >{{ chatDetails.userName }} </div>
+               <b v-if="chatDetails.id == adminid" class="text-warning" style='font-size:9px' > <i> Admin</i></b>
+            
             </li>
           </ul>
 
@@ -225,8 +230,8 @@
 
           <BookMark />
           <chatBoxProfile />
-          <SectionChatting />
-          <MessegeBox />
+          <SectionChatting :username="userName"/>
+          <MessegeBox :recieverid="[userid]"  />
           <!-- <GoogleSignup/> -->
           <!-- <LoaderComp /> -->
         </div>
@@ -241,6 +246,7 @@ import BookMark from "../components/BookMark.vue";
 import chatBoxProfile from "../components/chatBoxProfile.vue";
 import MessegeBox from "../components/MessegeBox.vue";
 import SectionChatting from "./SectionChatting.vue";
+// import { ref } from 'vue';
 // import { onMounted } from 'vue';
 // import GoogleSignup from "../components/GoogleSignup.vue"
 
@@ -324,6 +330,9 @@ export default {
       firebaseChatsData: "",
       // firebaseData:''
       FirebasefilePath: "",
+      userid:"",
+      userName:"",
+      adminid:JSON.parse(localStorage.getItem('users') ).uid
     };
   },
 
@@ -400,6 +409,24 @@ export default {
     //     console.error('Error loading images from Firestore:', error);
     //   }
     // },
+    userchatting(dataid,dataname){
+      alert("user id is : " + dataid )
+      alert("admin user id  : " + JSON.parse(localStorage.getItem('users') ).uid);
+      //  this.userid=data;
+      //  this.adminid=JSON.parse(localStorage.getItem('users') ).uid;
+      //     if(this.userid==this.adminid)
+      //     {
+            
+      //     this.$refs.activeStatus.style.backgroundColor = "green";
+
+      //     }
+          const userid=dataid;
+          this.userid=dataid;
+          this.userName=dataname;
+          const adminid=JSON.parse(localStorage.getItem('users') ).uid;
+
+      this.$store.dispatch("oneToOneChat", { userid , adminid});
+    }
   },
   computed: {
     firebaseData() {

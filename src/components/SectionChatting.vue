@@ -1,113 +1,96 @@
 <template>
   <div
     class="outerWrapperChatting bg-Success text-dark bg-white"
- 
     ref="chatContainer"
   >
     <ul class="p-0 m-0 chattingList">
       <li
-        class="d-flex pl-2"
-        v-for="(item, index) in Messegelist"
+        class="d-flex pl-2 pt-5"
+        v-for="(messege, index) in Messegelist"
         :key="index"
       >
         <img
-          :src="item.profileImage"
-          alt="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
+          :src="
+            messege.profileImage
+              ? ''
+              : 'https://ca.slack-edge.com/TGFFD750S-U049NKVSRUH-g1ebd9252638-512'
+          "
+          alt="loading"
           class="profileImagesChats"
         />
         <span>
-          <b>
-            <h6 class="pl-2 mb-0 font-weight-bold">
-             
-                 {{ item.name}}
+          <b class="d-flex">
+            <h6 class="pl-2 mb-0 font-weight-bold mr-5">
+              <!-- Display sender's name or any other identifier -->
+              {{ username }}
             </h6>
+            <div class="text-success flex-end">
+              {{ Math.floor(messege.timestamp.seconds) % 60 }} mins
+            </div>
           </b>
-          <p class="Messeges p-2 text-justify">{{ item.messegeLast }}</p>
+          <p class="Messeges p-2 text-justify">{{ messege.messaging }}</p>
         </span>
       </li>
-
-      
-      
+     
     </ul>
   </div>
 </template>
 
 <script>
-
 import { myMixin } from "../mixins";
 export default {
   name: "SectionChatting",
   mixins: [myMixin],
+  props:['username'],
   data() {
     return {
       items: [],
       newChatsFirebase: [],
-
+      previousMessages:null
     };
+  },
+ 
+  methods:{
+      scrollToBottom() {
+      // Using Vue.nextTick to ensure the DOM has updated before scrolling
+      
+      this.$nextTick(() => {
+        const container = this.$refs.chatContainer;
+        container.scrollTop = container.scrollHeight;
+      });
+    },
+     userinfo()
+  {
+    alert("yes")
+   console.log( "this is the user id  :: "  + this.Messegelist.id);
+
+  },
+
+  },
+ 
+   mounted(){
+        this.scrollToBottom();
+        this.userinfo;
 
   },
 
   computed: {
-     Messegelist()
-    {
-      return  this.$store.getters.allmesseges;
-    }
-  //   chatListDetails() {
-  //     try {
-  //       const chatListDetailsString = this.$store.getters.getChatListDetails;
-  //       // Check if the string is empty before attempting to parse
-  //       if (chatListDetailsString.trim() === "") {
-  //         return {}; // Return a default value or handle the empty string case
-  //       }
-  //       return JSON.parse(chatListDetailsString);
-  //     } catch (error) {
-  //       return {}; // Return a default value or handle the error appropriately
-  //     }
-  //   },
-  //   firebaseData() {
-  //      return this.$store.getters.getFirebaseDataFromStore;
-  //   },
+    Messegelist() {
+      return this.$store.getters.filteredChats;
+    },
   },
-//  created()
-//  {
-//    this.$store.dispatch("fetchFirebaseDatabase");
-    
-//  },
-   mounted() {
-    this.Messegelist
-    
-   
-},
- 
-  // mounted() {
-  //   this.$store.dispatch("chattings", this.items);
-    //  this.scrollToBottom();
-//    const dbRef = ref(database, 'Chats/Messeges');
 
-// get(dbRef).then((snapshot) => {
-//   if (snapshot.exists()) {
-//     console.log(snapshot.val());
-//   } else {
-//     console.log("No data available");
-//   }
-// }).catch((error) => {
-//   console.error(error);
-// });
-
-  // },
   
-  // watch: {
-  //   "chatListDetails.name": {
-  //     handler() {
-  //       this.profileDefalut();
-  //     },
-  //     immediate: true,
-  //   },
-  // },
+    watch: {
+    messages() {
+      this.scrollToBottom();
+    }
+  }
+
 };
 </script>
 
-<style>
+<style scoped>
 .outerWrapperChatting {
   /* border: 1px solid orange; */
   padding: 1rem;
@@ -123,6 +106,9 @@ ul {
   height: 3rem;
   width: 3rem;
   border-radius: 10px;
+}
+ul li{
+  border-bottom: 1px solid gray;
 }
 .Messeges {
   font-size: small;
